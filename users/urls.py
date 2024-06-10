@@ -5,12 +5,14 @@ from django.urls import path
 from users.views import PaymentListAPIView, PaymentCreateAPIView, UserViewSet
 
 app_name = UsersConfig.name
-router = DefaultRouter()
-router.register(r'users', UserViewSet, basename='courses')
+
+# router = DefaultRouter()
+# router.register(r'users', UserViewSet, basename='courses')
 
 
-urlpatterns = [
-    path('payments/', PaymentListAPIView.as_view(), name='payment_list'),
-    path('payments/create/', PaymentCreateAPIView.as_view(), name='payment_create'),
+urlpatterns = ([
+    path('payment/', PaymentListAPIView.as_view(), name='payment_list'),
+    path('payment/create/', PaymentCreateAPIView.as_view(), name='payment_create'),
 
-] + router.urls
+])
+              # + router.urls
