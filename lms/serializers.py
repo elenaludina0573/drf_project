@@ -10,27 +10,27 @@ class LessonSerializer(serializers.ModelSerializer):
 
 
 class CourseSerializer(serializers.ModelSerializer):
-    information_all_lessons = LessonSerializer(source='lesson_set', many=True)
-    number_of_lessons = serializers.SerializerMethodField()
+    information_all_lessons = LessonSerializer(many=True, read_only=True)
+    number_of_lessons = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Course
-        fields = '__all__'
+        fields = ['id', 'title', 'description', 'number_of_lessons', 'information_all_lessons']
 
     def get_number_of_lessons(self, course):
         return Lesson.objects.filter(course=course).count()
 
     def create(self, validated_data):
-        lesson = validated_data('lesson_set')
+        lesson = validated_data.pop('information_all_lessons')
         course = Course.objects.create(**validated_data)
-        for lesson in lesson:
-            Lesson.objects.create(course=course, **lesson)
+        for lessson in lesson:
+            Lesson.objects.create(course=course, **lessson)
             return course
 
 
 class CourseDitailSerializer(serializers.ModelSerializer):
-    number_of_lessons = serializers.SerializerMethodField()
-    information_all_lessons = LessonSerializer(many=True)
+    number_of_lessons = serializers.SerializerMethodField(read_only=True)
+    information_all_lessons = LessonSerializer(many=True, read_only=True)
 
     def get_number_of_lessons(self, course):
         return Lesson.objects.filter(course=course).count()
