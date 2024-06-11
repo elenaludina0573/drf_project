@@ -23,8 +23,8 @@ class CourseSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         lesson = validated_data.pop('information_all_lessons')
         course = Course.objects.create(**validated_data)
-        for lessson in lesson:
-            Lesson.objects.create(course=course, **lessson)
+        for lesson in lesson:
+            Lesson.objects.create(course=course, **lesson)
             return course
 
 
