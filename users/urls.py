@@ -15,7 +15,7 @@ app_name = UsersConfig.name
 
 urlpatterns = ([
 
-    path('register/', UserCreateAPIView.as_view(), name='register'),
+    path('register/', UserCreateAPIView.as_view(permission_classes=(AllowAny, )), name='register'),
     path('token/', TokenObtainPairView.as_view(permission_classes=(AllowAny, )), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(permission_classes=(AllowAny, )), name='token_refresh'),
     path('payment/', PaymentListAPIView.as_view(), name='payment_list'),
