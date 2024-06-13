@@ -1,5 +1,8 @@
 from django.db import models
 
+from config.settings import AUTH_USER_MODEL
+
+
 NULLABLE = {'blank': True, 'null': True}
 
 
@@ -7,6 +10,7 @@ class Course(models.Model):
     title = models.CharField(max_length=255, verbose_name='название')
     preview = models.ImageField(upload_to='lms/', **NULLABLE)
     description = models.TextField(max_length=250, verbose_name='описание')
+    owner = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.SET_NULL, **NULLABLE, verbose_name='владелец')
 
     def __str__(self):
         return f'{self.title}'
@@ -22,6 +26,7 @@ class Lesson(models.Model):
     video = models.FileField(upload_to='lms/', **NULLABLE)
     preview = models.ImageField(upload_to='lms/', **NULLABLE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name='курс', related_name='course')
+    owner = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.SET_NULL, **NULLABLE, verbose_name='владелец')
 
     def __str__(self):
         return f'{self.title}'
