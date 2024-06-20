@@ -1,9 +1,12 @@
 from rest_framework import serializers
 
-from lms.models import Course, Lesson
+from lms.models import Course, Lesson, Subscription
+from lms.validators import YoutubeLinkValidator
 
 
 class LessonSerializer(serializers.ModelSerializer):
+    validators = [YoutubeLinkValidator(field='video')]
+
     class Meta:
         model = Lesson
         fields = '__all__'
@@ -31,6 +34,7 @@ class CourseSerializer(serializers.ModelSerializer):
 class CourseDitailSerializer(serializers.ModelSerializer):
     number_of_lessons = serializers.SerializerMethodField(read_only=True)
     information_all_lessons = LessonSerializer(many=True, source='course')
+    subscription = serializers.SerializerMethodField(read_only=True)
 
     def get_number_of_lessons(self, course):
         return Lesson.objects.filter(course=course).count()
@@ -38,3 +42,9 @@ class CourseDitailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
         fields = ['id', 'title', 'description', 'number_of_lessons', 'information_all_lessons']
+
+
+class SubscriptionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Subscription
+        fields = '__all__'
