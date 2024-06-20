@@ -48,7 +48,6 @@ class LessonListAPIView(generics.ListAPIView):
     pagination_class = CustomPagination
 
 
-
 class LessonRetrieveAPIView(generics.RetrieveAPIView):
     serializer_class = LessonSerializer
     queryset = Lesson.objects.all()
@@ -80,8 +79,8 @@ class SubscriptionCreateAPIView(APIView):
         subs_item = Subscription.objects.filter(user=user, course=course)
         if subs_item.exists():
             subs_item.delete()
-            message = 'подписка удалена'
+            message = 'Подписка удалена'
         else:
-            Subscription.objects.create(user=user, course=course) # Создаем подписку
-            message = 'подписка добавлена'
+            Subscription.objects.create(user=user, course=course)
+            message = 'Подписка добавлена'
         return Response({"message": message})
