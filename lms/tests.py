@@ -31,10 +31,12 @@ class LessonTestCase(APITestCase):
         self.data = {
             "title": "Основы backend-разработки",
             "course": self.lesson.course.id,
+            "description": "Внутренняя часть цифрового продукта",
         }
         response = self.client.post(self.url, self.data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(response.data['title'], self.lesson.title)
+
+        self.assertEqual(response.data['title'], "Основы backend-разработки")
         self.assertEqual(response.data['course'], self.lesson.course.id)
         self.assertEqual(
             Lesson.objects.all().count(), 2)
@@ -43,7 +45,8 @@ class LessonTestCase(APITestCase):
         self.url = reverse('lms:lessons_update', args=(self.lesson.pk,))
         self.data = {
             "title": "Основы backend-разработки",
-            "course": self.course.id
+            "course": self.course.id,
+            "description": "Внутренняя часть цифрового продукта",
         }
         response = self.client.put(self.url, self.data)
         self. data = response.json()
