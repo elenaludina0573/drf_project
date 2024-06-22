@@ -39,9 +39,18 @@ class CourseDitailSerializer(serializers.ModelSerializer):
     def get_number_of_lessons(self, course):
         return Lesson.objects.filter(course=course).count()
 
+    def get_subscription(self, course):
+        user = self.context.get('request').user
+        course = self.context.get('view').kwargs.get('pk')
+        subscription = Subscription.objects.filter(user=user, course=course)
+        if subscription.exists():
+            return True
+        else:
+            return False
+
     class Meta:
         model = Course
-        fields = ['id', 'title', 'description', 'number_of_lessons', 'information_all_lessons']
+        fields = ['id', 'title', 'description', 'number_of_lessons', 'information_all_lessons', 'subscription']
 
 
 class SubscriptionSerializer(serializers.ModelSerializer):
