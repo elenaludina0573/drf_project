@@ -33,6 +33,9 @@ class Payment(models.Model):
     method_choices = {"наличными": "наличными", "переводом": "переводом"}
     payment_method = models.CharField(max_length=50, choices=method_choices, verbose_name='Способ оплаты')
 
+    session_id = models.CharField(max_length=255, verbose_name='Id сессии', **NULLABLE)
+    link = models.URLField(max_length=400, verbose_name='Cсылка на оплату', **NULLABLE)
+
     def __str__(self):
         return (f'{self.user}: {self.date_of_payment}, {self.payment_sum}, {self.payment_method}, '
                 f'за {self.paid_course if self.paid_course else self.paid_lesson}')
