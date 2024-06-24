@@ -4,7 +4,7 @@ from rest_framework.permissions import AllowAny
 
 from users.models import Payment, User
 from users.serializers import PaymentSerializer, UserSerializer
-from users.services import convert_rub_to_dollars, create_stripe_price, create_stripe_session
+from users.services import convert_rub_to_dollars, create_stripe_price, create_stripe_session, create_stripe_product
 
 
 class UserCreateAPIView(generics.CreateAPIView):
