@@ -158,5 +158,3 @@ SIMPLE_JWT = {
 }
 
 STRIPE_API_KEY = os.getenv("STRIPE_API_KEY")
-
-STRIPE_API_KEY="sk_test_51PUa34LHwU56b2BRoetVIgbzV5sltwv01uti8u3WcpfMCkebzD39fGwN1qGon0KjgmwoTJRQyw9cDvuOaroeVEIN00NshfQxZq"
