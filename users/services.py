@@ -18,21 +18,22 @@ def create_stripe_product(instance):
     return stripe_product.get('id')
 
 
-# def convert_rub_to_dollars(payment_sum):
-#     """ Конвертирует рубли в доллары """
-#
-#     c = CurrencyRates()
-#     rate = c.get_rate('RUB', 'USD')
-#     return int(payment_sum * rate)
+def convert_rub_to_dollars(payment_sum):
+    """ Конвертирует рубли в доллары """
+
+    c = CurrencyRates()
+    rate = c.get_rate('RUB', 'USD')
+    return int(payment_sum * rate)
 
 
-def create_stripe_price(payment_sum):
+def create_stripe_price(payment_sum, stripe_product_id):
     """ Создает цену в страйпе """
 
     return stripe.Price.create(
         currency="usd",
         unit_amount=payment_sum * 100,
         product_data={"name": "Payment"},
+        product=stripe_product_id,
     )
 
 
